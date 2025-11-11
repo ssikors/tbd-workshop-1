@@ -106,13 +106,20 @@ version: 0.1 resource_usage:
 
 2.  Find and correct the error in spark-job.py
 
-    ***describe the cause and how to find the error***
+    We've changed the DATA-BUCKET in spark-job.py to ours before running it for the first time due to the comment there. After running it, all signs showed that the job was performed successfully, as there was a _SUCCESS folder in the data bucket. If we were to look for the error ourselves, we would probably use logs from the job to identify the cause.
 
 3.  Add support for preemptible/spot instances in a Dataproc cluster
 
-    ***place the link to the modified file and inserted terraform code***
+    We've inserted following code:
+
+    secondary_worker_config {
+    num_instances   = 2
+    preemptibility  = "PREEMPTIBLE"
+    }
     
-4.  Triggered Terraform Destroy on Schedule or After PR Merge. Goal: make sure we never forget to clean up resources and burn money.
+    Into following file: https://github.com/ssikors/tbd-workshop-1/blob/infracost-changes/modules/dataproc/main.tf
+    
+5.  Triggered Terraform Destroy on Schedule or After PR Merge. Goal: make sure we never forget to clean up resources and burn money.
 
 Add a new GitHub Actions workflow that:
   1. runs terraform destroy -auto-approve
