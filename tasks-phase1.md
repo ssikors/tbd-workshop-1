@@ -28,27 +28,81 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    
 6. Reach YARN UI
    
-   ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
+    **Port:** 8088
+
+   **Command:**
+   ```
+   gcloud compute ssh tbd-cluster-m \
+         --project=tbd-2025z-318720 \
+         -- -L 8088:localhost:8088
+   ```
+
+    **Screenshot:**
+   ![alt text](./report/yarnui.png)
    
 7. Draw an architecture diagram (e.g. in draw.io) that includes:
     1. Description of the components of service accounts
     2. List of buckets for disposal
     
-    ***place your diagram here***
+    ![alt text](./report/architecture_diagram.png)
+
 
 8. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
 create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml) 
 
-   ***place the expected consumption you entered here***
+version: 0.1 resource_usage:
 
-   ***place the screenshot from infracost output here***
+  module.gcr.google_artifact_registry_repository.registry:
+    storage_gb: 50
+    
+  module.data-pipelines.google_storage_bucket.tbd-data-bucket:
+    storage_gb: 50
+    
+  module.dataproc.google_storage_bucket.dataproc_staging:
+    storage_gb: 100
+    
+  module.dataproc.google_storage_bucket.dataproc_temp:
+    storage_gb: 50
+    
+  module.vpc.module.cloud-router.google_compute_router_nat.nats["nat-gateway"]: 
+    network_egress_gb: 1000
+
+   ![Usage costs screenshot](https://github.com/user-attachments/assets/09a9dccf-ac6b-4c0b-a353-0c35378b7a5b)
+
 
 1. Create a BigQuery dataset and an external table using SQL
     
-    ***place the code and output here***
+    **Creating the schema**
+    ```
+    CREATE SCHEMA `tbd-2025z-318720`.TEST_DATASET_1
+    OPTIONS (
+        description = 'This is a description',
+        labels = [('class','tbd'),('stage','first')],
+        location = 'europe-west1',
+        max_time_travel_hours = 48);
+    ```
+    ![alt text](./report/dataset.png)
    
-    ***why does ORC not require a table schema?***
+    **Creating the external table**
+    ```
+    CREATE OR REPLACE EXTERNAL TABLE `tbd-2025z-318720.TEST_DATASET_1.dummy_external`
+    (
+    id INT64,
+    name STRING
+    )
+    OPTIONS (
+    format = 'CSV',
+    uris = ['gs://tbd-2025z-318720-data/dummy.csv'],
+    skip_leading_rows = 1
+    );
+    ```
+
+    ![alt text](./report/external.png)
+
+    ***Why does ORC not require a table schema?***
+    
+    The ORC data format would not require defining a table schema here because it is self-describing, which allows BigQuery to read the schema from .orc file metadata.
 
 2.  Find and correct the error in spark-job.py
 
