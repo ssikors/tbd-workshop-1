@@ -112,9 +112,8 @@ version: 0.1 resource_usage:
 
     We've inserted following code:
 
-    secondary_worker_config {
-    num_instances   = 2
-    preemptibility  = "PREEMPTIBLE"
+    preemptible_worker_config {
+      num_instances = 1
     }
     
     Into following file: https://github.com/ssikors/tbd-workshop-1/blob/infracost-changes/modules/dataproc/main.tf
@@ -134,8 +133,10 @@ Steps:
   2. Configure it to authenticate and destroy Terraform resources
   3. Test the trigger (schedule or cleanup-tagged PR)
      
-***paste workflow YAML here***
+The file is located here:
+https://github.com/ssikors/tbd-workshop-1/blob/infracost-changes/.github/workflows/auto-destroy.yml
 
-***paste screenshot/log snippet confirming the auto-destroy ran***
+Auto-destroy screenshot:
+<img width="1267" height="75" alt="obraz" src="https://github.com/user-attachments/assets/48cd023d-29ab-40a1-b8e4-ceac06ee413c" />
 
-***write one sentence why scheduling cleanup helps in this workshop***
+Scheduling cleanup prevents unnecessary cloud costs by ensuring temporary workshop resources are automatically deleted in 24 hours at the latest.
