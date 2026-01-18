@@ -4,7 +4,6 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 1. Authors:
    ***Group 11***
-
    ***[https://github.com/ssikors/tbd-workshop-1](https://github.com/ssikors/tbd-workshop-1)***
    
 2. Follow all steps in README.md.
