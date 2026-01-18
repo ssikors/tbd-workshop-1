@@ -132,7 +132,7 @@ Steps:
   2. Configure it to authenticate and destroy Terraform resources
   3. Test the trigger (schedule or cleanup-tagged PR)
      
-The file is located here:
+The file is located here: 
 https://github.com/ssikors/tbd-workshop-1/blob/infracost-changes/.github/workflows/auto-destroy.yml
 
 Auto-destroy screenshot:
