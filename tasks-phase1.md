@@ -3,7 +3,6 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 ![img.png](doc/figures/destroy.png)
 
 1. Authors:
-
    ***Group 11***
 
    ***[https://github.com/ssikors/tbd-workshop-1](https://github.com/ssikors/tbd-workshop-1)***
